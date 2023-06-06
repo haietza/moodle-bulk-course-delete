@@ -35,9 +35,7 @@ while read courseid; do
 
   echo "`date +%Y%m%d%H%M`: delete course with id $courseid" >>$LOG_FILE
   sudo -u apache php admin/cli/delete_course.php --courseid="$courseid" --disablerecyclebin --showdebugging --non-interactive >>$LOG_FILE 2>&1
-  #moosh course-delete $courseid >>$LOG_FILE 2>&1
 done < $IN_FILE
 
 echo "`date +%Y%m%d%H%M`: clear cache" >>$LOG_FILE 2>&1
 sudo -u apache php admin/cli/purge_caches.php >>$LOG_FILE 2>&1
-#moosh cache-clear >>$LOG_FILE 2>&1

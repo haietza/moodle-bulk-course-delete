@@ -1,8 +1,9 @@
 #!/bin/bash
 
-export IN_FILE="/var/www/moosh/delete-course-list.txt"
-export LOG_FILE="/var/www/moosh/logs/delete-course-log-`date +%Y%m%d%H%M`.txt"
-export BREAK_FILE="/var/www/moosh/breakfile.txt"
+export BASE_DIR="/var/www/moosh"
+export IN_FILE="$BASE_DIR/delete-course-list.txt"
+export LOG_FILE="$BASE_DIR/logs/delete-course-log-`date +%Y%m%d%H%M`.txt"
+export BREAK_FILE="$BASE_DIR/breakfile.txt"
 
 export MOODLE_DIR="/var/www/html"
 
@@ -34,8 +35,8 @@ while read courseid; do
   fi
 
   echo "`date +%Y%m%d%H%M`: delete course with id $courseid" >>$LOG_FILE
-  sudo -u apache php admin/cli/delete_course.php --courseid="$courseid" --disablerecyclebin --showdebugging --non-interactive >>$LOG_FILE 2>&1
+  php admin/cli/delete_course.php --courseid="$courseid" --disablerecyclebin --showdebugging --non-interactive >>$LOG_FILE 2>&1
 done < $IN_FILE
 
 echo "`date +%Y%m%d%H%M`: clear cache" >>$LOG_FILE 2>&1
-sudo -u apache php admin/cli/purge_caches.php >>$LOG_FILE 2>&1
+php admin/cli/purge_caches.php >>$LOG_FILE 2>&1

@@ -4,13 +4,15 @@ Use this script to bulk delete courses in Moodle by course ID.
 # Setup
 - Put course IDs to be deleted in text file, one per line
 - Update bulk-course-delete.sh:
+  - BASE_DIR: Location of delete script and related files
   - IN_FILE: Text file with course IDs to be deleted
   - LOG_FILE: Location of logs for script
   - BREAK_FILE: Location of breakfile for script
-  - MOODLE_DIR: Location of Moodle instance
+  - MOODLE_DIR: Location of Moodle instanc
+- Make sure logs directory is writable by apache user
 
 # Run
-Run script as apache user in background ./bulk-course-delete.sh &
+Run script as apache user in background sudo -u apache ./bulk-course-delete.sh &
 
 # Notes
 - Keep an eye on the database server space; if lots of (large) courses are being deleted, the binary log files can grow rapidly due to the high number of delete transactions
